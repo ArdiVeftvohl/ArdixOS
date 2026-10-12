@@ -7,9 +7,13 @@
       self.nixosModules.noctalia-greeter
     ];
   
-    boot.loader.systemd-boot.enable = true;
-    boot.loader.efi.canTouchEfiVariables = true;
-    boot.kernelPackages = pkgs.linuxPackages_latest;
+    boot = {
+      loader = {
+        systemd-boot.enable = true;
+        efi.canTouchEfiVariables = true;
+      };
+      kernelPackages = pkgs.linuxPackages_latest;
+    };
   
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -27,6 +31,7 @@
         tree
       ];
     };
+    home-manager.users.ardi = self.homeModules.ardiModule;
   
     environment.systemPackages = with pkgs; [
       neovim
